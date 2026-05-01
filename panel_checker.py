@@ -1,5 +1,6 @@
 #Step 1: Read the panel CSV, collect all the fluorochromes into one list. 
 import csv # Import the csv module to read CSV files
+import argparse # Import the argparse module to handle command-line arguments
 def load_panel(filename): # Define a function called load_panel that opens a CSV file and reads its contents
     panel_fluorochromes = [] # Create an empty list called panel_fluorochromes to store the fluorochromes from the CSV file
     filename = "my_panel.csv" # Define the filename of the CSV file to read
@@ -23,10 +24,15 @@ def check_conflicts(panel_fluorochromes): # Define a function called check_confl
         print("No conflicts detected based on the current panel design.")
 
 def main():
-    filename = "my_panel.csv" # Define the filename of the CSV file to read
+    parser = argparse.ArgumentParser(description="Check for conflicts in a flow cytometry panel.")
+    parser.add_argument("-p", "--panel", help="Path to the CSV panel file.")
+    args = parser.parse_args()
+
+    filename = args.panel # Define the filename of the CSV file to read
     panel_fluorochromes = load_panel(filename) # Call the load_panel function with the filename and store the result in panel_fluorochromes
     check_conflicts(panel_fluorochromes) # Call the check_conflicts function with the list of panel_fluorochromes to check for any conflicts
 
 main() # Call the main function to execute the program
+
 
 #TODO: replace the conflict_pairs list with a database of known fluorochrome-channel conflicts, and implement a function to check for conflicts based on the data read from the CSV file. 
